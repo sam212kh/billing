@@ -12,12 +12,6 @@ use Auth;
 
 class HomeController extends Controller
 {
-
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
     public function __construct()
     {
         $this->middleware('auth');
@@ -29,6 +23,7 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $user   = User::find( Auth::user()->id );
@@ -61,8 +56,9 @@ class HomeController extends Controller
           $user->updateDefaultPaymentMethodFromStripe();
       }
 
+
       // check for user trial
-      if( $user->subscription('monthly')->trial_ends_at == '' && !$user->subscription('monthly')->onTrial() )
+      if( $user->subscription('monthly')->stripe_status != 'active' && !$user->subscription('monthly')->onTrial() )
       {
           // show form payment to user
           return view('payment', [

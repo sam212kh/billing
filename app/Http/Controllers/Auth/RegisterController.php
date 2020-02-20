@@ -70,14 +70,14 @@ class RegisterController extends Controller
         $User =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'trial_ends_at' => Carbon::now()->addDays(14),
+            'trial_ends_at' => Carbon::now()->addDays( env('Trial_Day') ),
             'password' => Hash::make($data['password']),
         ]);
 
         $User->updateDefaultPaymentMethodFromStripe();
 
         $User->newSubscription('monthly', 'plan_GZQvP96jpU4OF7')
-                  ->trialDays(14)
+                  ->trialDays( env('Trial_Day') )
                   ->create();
 
         return $User;

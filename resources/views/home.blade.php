@@ -36,7 +36,9 @@
                       <br />
                       you are on trial, its end : {{ date('Y-m-d', strtotime($user->trial_ends_at))  }}
                       <br />
+
                     @endif
+
                 </div>
             </div>
         </div>
